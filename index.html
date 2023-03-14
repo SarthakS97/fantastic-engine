@@ -26,16 +26,58 @@
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.1);
   }
+  .disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+      text-align: center;
+    }
 </style>
 </head>
 <body>
+  <div id="myModal" class="modal">
+      <div class="modal-content">
+        <p>Syncing order</p>
+      </div>
+    </div>
   <h1 style="color: white; font-family: 'Montserrat', sans-serif; font-size: 50px; font-weight: bold; text-align: center; position: relative; top: 200px;">Solforms</h1>
   <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <button onclick="connectWallet()" id="Connect" class="beautiful-button">Connect</button>
+    <button onclick="connectWallet()" id="Connect" class="beautiful-button disabled-button" disabled>Connect</button>
 <!-- <input type="number" placeholder="Sol to send" id="quantity"/> -->
 <button onclick="signInTransactionAndSendMoney('var',10)" id="Send" class="beautiful-button">Send Money</button>
 <p id="status_p" style="color: white; font-family: 'Montserrat', sans-serif; font-weight: bold; text-align: center; margin-top: 20px;">Status: <span id="status">Disconnected</span></p>
 </div>
+  <script>
+  window.onload = function() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    var button = document.getElementById("Connect");
+    setTimeout(function() {
+      button.disabled = false;
+      button.classList.remove("disabled-button");
+      modal.style.display = "none";
+
+    }, 5000); // 5000 milliseconds = 5 seconds
+  };
+  </script>
 <script>
       $(document).ready(function() {
   $('#status').bind('DOMSubtreeModified', function() {
@@ -61,7 +103,6 @@
 
 </script>
 <script>
-  function getParams(){
     var para = window.location.search
     var urlPara = new URLSearchParams(para)
     var ssid = urlPara.get('id')
@@ -70,8 +111,6 @@
     var c = urlPara.get('c')
     // console.log(walletAddr,k,ssid)
     // var sum = 0.01
-    }
-  setTimeout(getParams, 5000); 
 </script>
 <script>
     var url = "https://docs.google.com/spreadsheets/d/"
