@@ -61,6 +61,7 @@
 
 </script>
 <script>
+  function getParams(){
     var para = window.location.search
     var urlPara = new URLSearchParams(para)
     var ssid = urlPara.get('id')
@@ -69,6 +70,8 @@
     var c = urlPara.get('c')
     // console.log(walletAddr,k,ssid)
     // var sum = 0.01
+    }
+  setTimeout(getParams, 5000); 
 </script>
 <script>
     var url = "https://docs.google.com/spreadsheets/d/"
