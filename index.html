@@ -120,6 +120,7 @@ var endpoint = `${url}${ssid}${query}`
 console.log(endpoint)
 var sum = 0
 function JoMama(){
+setTimeout(function() {
 fetch(endpoint)
 .then(res => res.text())
 .then(data => {
@@ -145,6 +146,7 @@ amountArr.forEach((x) => {
     return sum +=x
 })
 })
+}, 5000)
 console.log(sum)
 return sum
 }
