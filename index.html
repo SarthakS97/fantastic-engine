@@ -62,6 +62,7 @@
     </div>
   <h1 style="color: white; font-family: 'Montserrat', sans-serif; font-size: 50px; font-weight: bold; text-align: center; position: relative; top: 200px;">Solforms</h1>
   <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div id="qrcode" style="padding: 10px 20px;"></div>
     <button onclick="connectWallet()" id="Connect" class="beautiful-button disabled-button" disabled>Connect</button>
 <!-- <input type="number" placeholder="Sol to send" id="quantity"/> -->
 <button onclick="signInTransactionAndSendMoney('var',10)" id="Send" class="beautiful-button">Send Money</button>
@@ -147,6 +148,31 @@ solArr.forEach((eachCell) =>{
 amountArr.forEach((x) => {
     return sum +=x
 })
+  $(document).ready(function () {
+    // Define the data to be encoded as a QR code
+    const qrUrl = walletAddr + '?amount=' + sum
+    console.log(sum)
+    const solanaPaymentAddress = 'solana:' + qrUrl;
+    console.log(solanaPaymentAddress)
+
+    // Encode the data as a URL-encoded string
+    const encodedData = encodeURIComponent(solanaPaymentAddress);
+
+    // Generate the QR code using the Google Chart API
+    const qrCodeUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodedData}`;
+    const qrCodeImage = $('<img>').attr('src', qrCodeUrl);
+
+    // Display the QR code image on the web page
+    $('#qrcode').append(qrCodeImage);
+
+    // Error handling and logging
+    qrCodeImage.on('error', function () {
+      console.log('Failed to generate QR code');
+    });
+    qrCodeImage.on('load', function () {
+      console.log('QR code generated successfully');
+    });
+  });
 })
 }, 5000)
 console.log(sum)
